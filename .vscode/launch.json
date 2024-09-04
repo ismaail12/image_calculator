@@ -1,0 +1,161 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Red Camera Roll | DEBUG",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appRedCameraRoll",
+        "--target",
+        "lib/main_red_camera_roll.dart"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Red Camera Roll | RELEASE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appRedCameraRoll",
+        "--target",
+        "lib/main_red_camera_roll.dart"
+      ],
+      "flutterMode": "release"
+    },
+    {
+      "name": "Red Camera Roll | PROFILE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appRedCameraRoll",
+        "--target",
+        "lib/main_red_camera_roll.dart"
+      ],
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Red Built-In Camera | DEBUG",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_built_in_camera.dart",
+      "args": [
+        "--flavor",
+        "appRedBuiltInCamera",
+        "--target",
+        "lib/main_red_built_in_camera.dart"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Red Built-In Camera | RELEASE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_built_in_camera.dart",
+      "args": [
+        "--flavor",
+        "appRedBuiltInCamera",
+        "--target",
+        "lib/main_red_built_in_camera.dart"
+      ],
+      "flutterMode": "release"
+    },
+    {
+      "name": "Red Built-In Camera | PROFILE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_red_built_in_camera.dart",
+      "args": [
+        "--flavor",
+        "appRedBuiltInCamera",
+        "--target",
+        "lib/main_red_built_in_camera.dart"
+      ],
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Green Filesystem | DEBUG",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_filesystem.dart",
+      "args": [
+        "--flavor",
+        "appGreenFilesystem",
+        "--target",
+        "lib/main_green_filesystem.dart"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Green Filesystem | RELEASE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_filesystem.dart",
+      "args": [
+        "--flavor",
+        "appGreenFilesystem",
+        "--target",
+        "lib/main_green_filesystem.dart"
+      ],
+      "flutterMode": "release"
+    },
+    {
+      "name": "Green Filesystem | PROFILE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_filesystem.dart",
+      "args": [
+        "--flavor",
+        "appGreenFilesystem",
+        "--target",
+        "lib/main_green_filesystem.dart"
+      ],
+      "flutterMode": "profile"
+    },
+    {
+      "name": "Green Camera Roll | DEBUG",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appGreenCameraRoll",
+        "--target",
+        "lib/main_green_camera_roll.dart"
+      ],
+      "flutterMode": "debug"
+    },
+    {
+      "name": "Green Camera Roll | RELEASE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appGreenCameraRoll",
+        "--target",
+        "lib/main_green_camera_roll.dart"
+      ],
+      "flutterMode": "release"
+    },
+    {
+      "name": "Green Camera Roll | PROFILE",
+      "request": "launch",
+      "type": "dart",
+      "program": "lib/main_green_camera_roll.dart",
+      "args": [
+        "--flavor",
+        "appGreenCameraRoll",
+        "--target",
+        "lib/main_green_camera_roll.dart"
+      ],
+      "flutterMode": "profile"
+    }
+  ]
+}
