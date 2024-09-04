@@ -5,32 +5,45 @@ import 'package:image_calculator/features/calculator/presentations/screens/detai
 import 'package:image_calculator/features/calculator/presentations/screens/success_screen.dart';
 import 'package:image_calculator/features/calculator/presentations/widgets/custom_bottom_sheet.dart';
 
-class FileStorageScreen extends StatelessWidget {
-  const FileStorageScreen({super.key});
+
+class CalculationResultListScreen extends StatelessWidget {
+  final StorageType storageType;
+
+  const CalculationResultListScreen({super.key, required this.storageType});
 
   @override
   Widget build(BuildContext context) {
-    context.read<GetCalculationResultCubit>().fetchResults(StorageType.file);
+    context.read<GetCalculationResultCubit>().fetchResults(storageType);
+
     return BlocBuilder<GetCalculationResultCubit, GetCalculationResultState>(
       builder: (context, state) {
         if (state is GetCalculationResultLoading) {
           return const Center(child: CircularProgressIndicator());
         } else if (state is GetCalculationResultSuccess) {
+          final results = storageType == StorageType.file
+              ? state.fromFiles
+              : state.fromDatabase;
+
+          if (results.isEmpty) {
+            return const Center(child: Text('No data found'));
+          }
+
           return RefreshIndicator(
             onRefresh: () async {
               context
                   .read<GetCalculationResultCubit>()
-                  .fetchResults(StorageType.file);
+                  .fetchResults(storageType);
             },
             child: ListView.builder(
-              itemCount: state.fromFiles.length,
+              itemCount: results.length,
               itemBuilder: (context, index) {
-                final calculation = state.fromFiles[index];
+                final calculation = results[index];
                 return ListTile(
                   onTap: () {
                     showCustomBottomSheet(
                       context,
-                      child: DetailCalculationResultScreen(calculation: calculation),
+                      child: DetailCalculationResultScreen(
+                          calculation: calculation),
                     );
                   },
                   title: Text('Input: ${calculation.input}'),

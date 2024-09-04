@@ -18,8 +18,8 @@ Future<void> fetchResults(StorageType storageType) async {
 
 
     try {
-      List<CalculationResult> fromFiles = await repository.readFromFileStorage();
-      List<CalculationResult> fromDatabase = await repository.readFromDatabaseStorage();
+      final List<CalculationResult> fromFiles = await repository.readFromFileStorage();
+      final List<CalculationResult> fromDatabase = await repository.readFromDatabaseStorage();
 
       if (fromFiles.isNotEmpty || fromDatabase.isNotEmpty)   {
         emit(GetCalculationResultSuccess(

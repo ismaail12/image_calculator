@@ -4,8 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_calculator/bootstrap.dart';
 import 'package:image_calculator/features/calculator/blocs/calculate_image_cubit/calculate_image_cubit.dart';
-import 'package:image_calculator/features/calculator/presentations/screens/database_storage_screen.dart';
-import 'package:image_calculator/features/calculator/presentations/screens/file_storage_screen.dart';
+import 'package:image_calculator/features/calculator/presentations/screens/calculation_result_list_screen.dart';
 import 'package:image_calculator/features/calculator/presentations/screens/success_screen.dart';
 import 'package:image_calculator/features/calculator/presentations/widgets/custom_button.dart';
 
@@ -65,12 +64,13 @@ class HomeScreen extends StatelessWidget {
               );
             } else if (state is CalculateImageFailure) {
               EasyLoading.dismiss();
+              EasyLoading.showError(state.error);
             }
           },
           child: const TabBarView(
             children: [
-              FileStorageScreen(), 
-              DatabaseStorageScreen(), 
+              CalculationResultListScreen(storageType: StorageType.file,), 
+              CalculationResultListScreen(storageType: StorageType.database,), 
             ],
           ),
         ),

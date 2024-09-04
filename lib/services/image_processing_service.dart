@@ -15,8 +15,7 @@ class ImageProcessingService {
         .firstWhere((line) => _isArithmeticExpression(line), orElse: () => '');
 
     if (expression.isEmpty) {
-      print('Tidak ada ekspresi aritmatika yang ditemukan.');
-      return null;
+      throw 'No arithmetic expression found.';
     }
 
     try {
@@ -26,11 +25,10 @@ class ImageProcessingService {
       return CalculationResult(
         input: expression,
         result: result,
-        path: imageFile.path, // Menambahkan path di sini
+        path: imageFile.path, // Adding path here
       );
     } catch (e) {
-      print('Gagal menghitung ekspresi: $expression');
-      return null;
+      throw 'Failed to evaluate expression: $expression';
     }
   }
 

@@ -36,7 +36,7 @@ class FileStorageService {
                 .map((item) => CalculationResult.fromJson(item))
                 .toList();
           } catch (e) {
-            print('Error reading or parsing file: $e');
+            throw 'Error reading or parsing file: $e';
           }
         }
       }
@@ -46,7 +46,7 @@ class FileStorageService {
       final encriptedFile = _encrypt(updatedContent);
       await file.writeAsString(encriptedFile);
     } catch (e) {
-      print('Error storing file: $e');
+      throw 'Error storing file: $e';
     }
   }
 
@@ -67,8 +67,7 @@ class FileStorageService {
           .reversed
           .toList();
     } catch (e) {
-      print('Error reading file list: $e');
-      return [];
+      throw 'Error reading file list: $e';
     }
   }
 }

@@ -17,8 +17,9 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
 
   Future<void> calculateImage() async {
     emit(CalculateImageLoading());
+    CalculationResult? calculationResult;
+
     try {
-      CalculationResult? calculationResult;
       switch (flavor) {
         case Flavor.appRedCameraRoll:
           calculationResult = await _handleAppRedCameraRoll();
@@ -35,55 +36,71 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
       }
 
       if (calculationResult != null) {
-        print(
-            'Result for ${calculationResult.input} is ${calculationResult.result}');
         emit(CalculateImageSuccess(
             'Operation completed successfully.', calculationResult));
-      } else {
-        emit(CalculateImageFailure('Failed to calculate image.'));
-      }
+      } 
     } catch (e) {
-      emit(CalculateImageFailure(e.toString()));
+      emit(CalculateImageFailure('An error occurred: ${e.toString()}'));
     }
   }
 
   Future<CalculationResult?> _handleAppRedCameraRoll() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      print('No image selected.');
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        emit(CalculateImageFailure('No image selected.'));
+        return null;
+      }
+      return await imageRepository.processImage(File(image.path));
+    } catch (e) {
+      emit(CalculateImageFailure('Failed to process image: ${e.toString()}'));
       return null;
     }
-    return await imageRepository.processImage(File(image.path));
   }
 
   Future<CalculationResult?> _handleAppRedBuiltInCamera() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-    if (image == null) {
-      print('No image captured.');
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image == null) {
+        emit(CalculateImageFailure('No image captured.'));
+        return null;
+      }
+      return await imageRepository.processImage(File(image.path));
+    } catch (e) {
+      emit(CalculateImageFailure('Failed to process image: ${e.toString()}'));
       return null;
     }
-    return await imageRepository.processImage(File(image.path));
   }
 
   Future<CalculationResult?> _handleAppGreenFilesystem() async {
-    final FilePickerResult? result =
-        await FilePicker.platform.pickFiles(type: FileType.image);
-    if (result == null || result.files.single.path == null) {
-      print('No file selected.');
+    try {
+      final FilePickerResult? result =
+          await FilePicker.platform.pickFiles(type: FileType.image);
+      if (result == null || result.files.single.path == null) {
+        emit(CalculateImageFailure('No file selected.'));
+        return null;
+      }
+      return await imageRepository.processImage(File(result.files.single.path!));
+    } catch (e) {
+      emit(CalculateImageFailure('Failed to process file: ${e.toString()}'));
       return null;
     }
-    return await imageRepository.processImage(File(result.files.single.path!));
   }
 
   Future<CalculationResult?> _handleAppGreenCameraRoll() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image == null) {
-      print('No image selected.');
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      if (image == null) {
+        emit(CalculateImageFailure('No image selected.'));
+        return null;
+      }
+      return await imageRepository.processImage(File(image.path));
+    } catch (e) {
+      emit(CalculateImageFailure('Failed to process image: ${e.toString()}'));
       return null;
     }
-    return await imageRepository.processImage(File(image.path));
   }
 }
