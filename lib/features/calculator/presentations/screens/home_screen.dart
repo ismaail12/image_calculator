@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_calculator/bootstrap.dart';
 import 'package:image_calculator/features/calculator/blocs/calculate_image_cubit/calculate_image_cubit.dart';
-import 'package:image_calculator/features/calculator/presentations/screens/file_storage_widget.dart';
+import 'package:image_calculator/features/calculator/presentations/screens/database_storage_screen.dart';
+import 'package:image_calculator/features/calculator/presentations/screens/file_storage_screen.dart';
 import 'package:image_calculator/features/calculator/presentations/screens/success_screen.dart';
 import 'package:image_calculator/features/calculator/presentations/widgets/custom_button.dart';
 
@@ -17,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // Number of tabs
+      length: 2, 
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -30,9 +31,8 @@ class HomeScreen extends StatelessWidget {
             child: Container(
               height: 60,
               color: Theme.of(context)
-                  .scaffoldBackgroundColor, // Set the background color here
+                  .scaffoldBackgroundColor, 
               child: TabBar(
-                
                 labelColor: Theme.of(context).primaryColor,
                 dividerColor: Colors.transparent,
                 indicatorSize: TabBarIndicatorSize.tab,
@@ -42,9 +42,9 @@ class HomeScreen extends StatelessWidget {
                 ),
                 indicatorPadding: const EdgeInsets.all(8),
                 labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-                tabs: [
-                  const Tab(text: 'File Storage',),
-                  const Tab(text: 'Database Storage'),
+                tabs: const [
+                  Tab(text: 'File Storage (Encrypted)',),
+                  Tab(text: 'Database Storage'),
                 ],
               ),
             ),
@@ -65,22 +65,19 @@ class HomeScreen extends StatelessWidget {
               );
             } else if (state is CalculateImageFailure) {
               EasyLoading.dismiss();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error)),
-              );
             }
           },
-          child: TabBarView(
+          child: const TabBarView(
             children: [
-              const FileStorageWidget(), // Content for Tab 1
-              Container(), // Content for Tab 2
+              FileStorageScreen(), 
+              DatabaseStorageScreen(), 
             ],
           ),
         ),
         bottomNavigationBar: Container(
           padding: const EdgeInsets.all(16),
           child: CustomButton(
-            text: 'Start Calculate',
+            text: 'Add Input',
             onPressed: () {
               context.read<CalculateImageCubit>().calculateImage();
             },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:image_calculator/features/calculator/blocs/calculate_image_cubit/calculate_image_cubit.dart';
+import 'package:image_calculator/features/calculator/blocs/get_calculation_result_cubit/get_calculation_result_cubit.dart';
 import 'package:image_calculator/features/calculator/blocs/save_result_cubit/save_result_cubit.dart';
 import 'package:image_calculator/features/calculator/presentations/screens/home_screen.dart';
 
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SaveResultCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetCalculationResultCubit(),
         ),
       ],
       child: MaterialApp(

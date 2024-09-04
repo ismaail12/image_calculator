@@ -32,6 +32,8 @@ class DatabaseStorageService {
       },
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    print(await readFromDatabaseStorage());
   }
 
   Future<List<CalculationResult>> readFromDatabaseStorage() async {
@@ -46,15 +48,5 @@ class DatabaseStorageService {
     }).toList();
   }
 
-  Future<List<CalculationResult>> listTables() async {
-    await _initDatabase();
-    final results = await _database!.query('results');
-    return results.map((result) {
-      return CalculationResult(
-        input: result['input'] as String,
-        result: double.parse(result['result'] as String),
-        path: result['path'] as String,
-      );
-    }).toList();
-  }
+
 }

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:image_calculator/features/calculator/blocs/get_calculation_result_cubit/get_calculation_result_cubit.dart';
 import 'package:image_calculator/features/calculator/blocs/save_result_cubit/save_result_cubit.dart';
 import 'package:image_calculator/features/calculator/data/models/calculation_result.dart';
 import 'package:image_calculator/features/calculator/presentations/widgets/custom_button.dart';
@@ -20,57 +21,65 @@ class SuccessScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Calculation Result'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.file(File(result.path)),
-            SizedBox(height: 16),
-            Text('Input: ${result.input}', style: Theme.of(context).textTheme.titleMedium),
-            SizedBox(height: 8),
-            Text('Result: ${result.result}', style: Theme.of(context).textTheme.titleMedium),
-            SizedBox(height: 16),
-            Column(
-              children: [
-                BlocConsumer<SaveResultCubit, SaveResultState>(
-                  listener: (context, state) {
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                  child: Image.file(
+                File(result.path),
+                height: 400,
+              )),
+              const SizedBox(height: 16),
+              Text('Input: ${result.input}',
+                  style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 8),
+              Text('Result: ${result.result}',
+                  style: Theme.of(context).textTheme.titleMedium),
+              const SizedBox(height: 16),
+              Column(
+                children: [
+                  BlocConsumer<SaveResultCubit, SaveResultState>(
+                    listener: (context, state) {
+                      if (state is SaveResultLoading) {
+                        EasyLoading.show(status: 'Processing');
+                      }
 
-                    if (state is SaveResultLoading) {
-                      EasyLoading.show(status: 'Processing');
-                    }
+                      if (state is SaveResultSuccess) {
+                        EasyLoading.dismiss();
 
-                    if (state is SaveResultSuccess) {
-                      EasyLoading.dismiss();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-                    } else if (state is SaveResultFailure) {
-                      EasyLoading.dismiss();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.error)));
-                    }
-                  },
-                  builder: (context, state) {
-                    return Column(
-                      children: [
-                        CustomButton(
-                          isFullWidth: true,
-                          onPressed: () => _saveResult(context, StorageType.file),
-                          text: 'Save to File',
-                        ),
-                        SizedBox(width: 16),
-                        CustomButton(
-                          color: Colors.amber,
-                          isFullWidth: true,
-                          onPressed: () => _saveResult(context, StorageType.database),
-                          text: 'Save to Database',
-                        ),
-
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      } else if (state is SaveResultFailure) {
+                        EasyLoading.dismiss();
+                        EasyLoading.showInfo(state.error);
+                      }
+                    },
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          CustomButton(
+                            isFullWidth: true,
+                            onPressed: () =>
+                                _saveResult(context, StorageType.file),
+                            text: 'Save to File',
+                          ),
+                          const SizedBox(width: 16),
+                          CustomButton(
+                            color: Colors.amber,
+                            isFullWidth: true,
+                            onPressed: () =>
+                                _saveResult(context, StorageType.database),
+                            text: 'Save to Database',
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -79,9 +88,13 @@ class SuccessScreen extends StatelessWidget {
   Future<void> _saveResult(BuildContext context, StorageType type) async {
     final saveResultCubit = context.read<SaveResultCubit>();
     await saveResultCubit.saveResult(result, type);
-    Future.delayed(Duration.zero, () {
-      Navigator.pop(context);
-    },);
+    Future.delayed(
+      Duration.zero,
+      () {
+        context.read<GetCalculationResultCubit>().fetchResults(type);
+        Navigator.pop(context);
+      },
+    );
   }
 }
 

@@ -36,7 +36,7 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
 
       if (calculationResult != null) {
         print(
-            'Hasil dari ${calculationResult.input} adalah ${calculationResult.result}');
+            'Result for ${calculationResult.input} is ${calculationResult.result}');
         emit(CalculateImageSuccess(
             'Operation completed successfully.', calculationResult));
       } else {
@@ -51,7 +51,7 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) {
-      print('Tidak ada gambar yang dipilih.');
+      print('No image selected.');
       return null;
     }
     return await imageRepository.processImage(File(image.path));
@@ -61,7 +61,7 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image == null) {
-      print('Tidak ada gambar yang diambil.');
+      print('No image captured.');
       return null;
     }
     return await imageRepository.processImage(File(image.path));
@@ -71,7 +71,7 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
     final FilePickerResult? result =
         await FilePicker.platform.pickFiles(type: FileType.image);
     if (result == null || result.files.single.path == null) {
-      print('Tidak ada file yang dipilih.');
+      print('No file selected.');
       return null;
     }
     return await imageRepository.processImage(File(result.files.single.path!));
@@ -81,7 +81,7 @@ class CalculateImageCubit extends Cubit<CalculateImageState> {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
     if (image == null) {
-      print('Tidak ada gambar yang dipilih.');
+      print('No image selected.');
       return null;
     }
     return await imageRepository.processImage(File(image.path));

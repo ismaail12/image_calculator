@@ -30,12 +30,10 @@ Future<void> storeToFileStorage(CalculationResult calculation) async {
   Future<List<CalculationResult>> readFromDatabaseStorage() async {
     return await databaseStorageService.readFromDatabaseStorage();
   }
-
-  Future<List<CalculationResult>> listStorage() async {
-    final fileResults = await fileStorageService.listStorageFiles();
-    final dbResults = await databaseStorageService.listTables();
-    return [...fileResults, ...dbResults];
+  Future<List<CalculationResult>> readFromFileStorage() async {
+    return await fileStorageService.listStorageFiles();
   }
+
 }
 
 

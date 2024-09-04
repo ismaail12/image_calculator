@@ -29,7 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.4
+  convert: ^3.1.1
+  crypto: ^3.0.5
   cupertino_icons: ^1.0.6
+  encrypt: ^5.0.3
   file_picker: ^8.1.2
   flutter:
     sdk: flutter

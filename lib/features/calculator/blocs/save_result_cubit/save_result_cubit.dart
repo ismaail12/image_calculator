@@ -2,16 +2,14 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:image_calculator/features/calculator/data/models/calculation_result.dart';
+import 'package:image_calculator/features/calculator/data/repositories/image_repository.dart';
 import 'package:image_calculator/features/calculator/presentations/screens/success_screen.dart';
-import 'package:image_calculator/services/database_storage_service.dart';
-import 'package:image_calculator/services/file_storage_service.dart';
 import 'package:meta/meta.dart';
 
 part 'save_result_state.dart';
 
 class SaveResultCubit extends Cubit<SaveResultState> {
-  final FileStorageService fileStorageService = FileStorageService();
-  final DatabaseStorageService databaseStorageService = DatabaseStorageService();
+  final imageRepository = ImageRepository();
 
   SaveResultCubit() : super(SaveResultInitial());
 
@@ -20,10 +18,10 @@ class SaveResultCubit extends Cubit<SaveResultState> {
 
     try {
       if (type == StorageType.file) {
-        await fileStorageService.storeToFileStorage(result);
+        await imageRepository.storeToFileStorage(result);
         emit(SaveResultSuccess('Saved to File'));
       } else if (type == StorageType.database) {
-        await databaseStorageService.storeToDatabaseStorage(result);
+        await imageRepository.storeToDatabaseStorage(result);
         emit(SaveResultSuccess('Saved to Database'));
       }
     } catch (e) {

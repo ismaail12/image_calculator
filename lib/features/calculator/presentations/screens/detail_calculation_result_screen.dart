@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_calculator/features/calculator/data/models/calculation_result.dart';
 
-class DetailCalculationResult extends StatelessWidget {
-  const DetailCalculationResult({
+class DetailCalculationResultScreen extends StatelessWidget {
+  const DetailCalculationResultScreen({
     super.key,
     required this.calculation,
   });
@@ -40,12 +40,14 @@ class DetailCalculationResult extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.0),
-                  child: Image.file(
-                    File(calculation.path),
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: Image.file(
+                      File(calculation.path),
+                      fit: BoxFit.cover,
+                      height: 400,
+                    ),
                   ),
                 ),
               ],

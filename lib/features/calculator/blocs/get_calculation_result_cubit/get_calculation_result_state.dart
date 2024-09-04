@@ -7,9 +7,10 @@ final class GetCalculationResultInitial extends GetCalculationResultState {}
 final class GetCalculationResultLoading extends GetCalculationResultState {}
 
 final class GetCalculationResultSuccess extends GetCalculationResultState {
-  final List<CalculationResult> results;
+  final List<CalculationResult> fromFiles;
+  final List<CalculationResult> fromDatabase;
 
-  GetCalculationResultSuccess(this.results);
+  GetCalculationResultSuccess(this.fromFiles, this.fromDatabase);
 }
 
 final class GetCalculationResultFailure extends GetCalculationResultState {
